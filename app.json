@@ -23,10 +23,23 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebaseConfig": {
+        "apiKey": "AIzaSyCQoVEt_9Zcuh_HAiGwrpp3HakgU4kmscA",
+        "authDomain": "weepchatapp.firebaseapp.com",
+        "databaseURL": "https://weepchatapp-default-rtdb.firebaseio.com",
+        "projectId": "weepchatapp",
+        "storageBucket": "weepchatapp.appspot.com",
+        "messagingSenderId": "221019364997",
+        "appId": "1:221019364997:web:b0081ab66d8ecbd02c93ec",
+        "measurementId": "G-C7RYQ34660"
+      }
     }
   }
 }

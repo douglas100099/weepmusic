@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "221019364997",
+    "firebase_url": "https://weepchatapp-default-rtdb.firebaseio.com",
+    "project_id": "weepchatapp",
+    "storage_bucket": "weepchatapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221019364997:android:7a493f5494bb96792c93ec",
+        "android_client_info": {
+          "package_name": "com.myth.weepmusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221019364997-qvuk17d4g6m7mi839djfgamu62209400.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTiUuVtVOyHp4Ro6R3u6iD2_pfAUwyz-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221019364997-qvuk17d4g6m7mi839djfgamu62209400.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
