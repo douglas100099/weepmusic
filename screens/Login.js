@@ -1,11 +1,14 @@
-import React from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { BackgroundImage, Logo } from '../components';
+import React, {useState} from 'react';
+import { View, Text, TextInput, StatusBar } from 'react-native';
+import { BackgroundImage, Button, Logo } from '../components';
 import { colors, font } from '../constants/theme';
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Login = () => {
+
+    const [togglePass, setTogglePass] = useState(true)
+
     return (
         <View style={{ flex: 1, backgroundColor: colors.darkblue }}>
             <BackgroundImage />
@@ -45,7 +48,7 @@ const Login = () => {
                             borderRadius: 5,
                             padding: 5,
                             paddingLeft: 40,
-                            backgroundColor: 'rgba(255,255,255, 0.3)',
+                            backgroundColor: 'rgba(255,255,255, 0.2)',
                             fontFamily: font.regular,
                             fontSize: 16,
                             color: 'rgba(255,255,255, 0.8)'
@@ -64,34 +67,56 @@ const Login = () => {
                         }}
                     />
                     <TextInput
+                        secureTextEntry={togglePass}
                         style={{
                             height: 50,
                             borderRadius: 5,
                             padding: 5,
                             paddingLeft: 40,
                             paddingRight: 35,
-                            backgroundColor: 'rgba(255,255,255, 0.3)',
+                            backgroundColor: 'rgba(255,255,255, 0.2)',
                             fontFamily: font.regular,
                             fontSize: 16,
                             color: 'rgba(255,255,255, 0.8)'
                         }}
                     />
-                    <TouchableOpacity
-                        style={{
-                            position: 'absolute',
-                            height: 20,
-                            width: 20,
-                            right: 8,
-                            zIndex: 99
-                        }}
-                    >
-                        <Feather
-                            name="eye"
-                            size={18}
-                            color={colors.redlight}
-                        />
-                    </TouchableOpacity>
+                    <View style={{ width: 20, height: 20, position: 'absolute', right: 8 }}>
+                        <TouchableOpacity>
+                            <Feather
+                                name="eye"
+                                size={18}
+                                color={colors.redlight}
+                                onPress={() => setTogglePass(!togglePass)}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
+                <Button styleView={{ marginTop: 50 }}>
+                    LOGIN
+                </Button>
+                <View style={{
+                    flexDirection: 'row',
+                    marginTop: 25,
+                }}>
+                    <Text style={{
+                        fontFamily: font.bold,
+                        color: colors.white,
+                        fontSize: 16
+                    }}>Não possui conta?</Text>
+                    <View style={{
+                        marginLeft: 3
+                    }}>
+                        <TouchableOpacity>
+                            <Text style={{
+                                fontFamily: font.bold,
+                                color: colors.redlight,
+                                fontSize: 16,
+                                textDecorationLine: 'underline',
+                            }}>Cadastre-se agora!</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <StatusBar barStyle='light-content' translucent={true} backgroundColor="transparent" />
             </View>
         </View>
     );
