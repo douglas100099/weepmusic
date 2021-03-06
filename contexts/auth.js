@@ -1,46 +1,71 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { AsyncStorage } from 'react-native';
-import * as auth from '../constants/auth';
+import * as firebase from 'firebase';
 
-const AuthContext = createContext({ signed: false, user: {} });
+const AuthContext = createContext({signed: false});
 
 export const AuthProvider = ({ children }) => {
 
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [signed, setSigned] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        async function loadStorageData() {
-            const storageUser = await AsyncStorage.getItem('@RNAuth:user');
-            const storageToken = await AsyncStorage.getItem('@RNAuth:token');
-
-            if (storageUser && storageToken) {
-                setUser(JSON.parse(storageUser));
+        setLoading(true)
+        firebase.auth().onAuthStateChanged(user => {
+            if (user != null) {
+                setSigned(true);
                 setLoading(false);
-            } else if (!storageUser && !storageToken) {
+            } else {
                 setLoading(false);
             }
-        }
-
-        loadStorageData();
+        })
     }, [])
 
-    async function signIn() {
-        const response = await auth.Signin()
-        setUser(response.user)
-
-        await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.user));
-        await AsyncStorage.setItem('@RNAuth:token', response.token);
+    async function register(email, password) {
+        try {
+            const registerUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            if (registerUser && registerUser.user) {
+                setSigned(true);
+                return true
+            }
+        } catch (e) {
+            alert(e);
+            return false
+        }
     }
 
-    function signOut() {
-        AsyncStorage.clear().then(() => {
-            setUser(null);
-        });
+    async function login(email, password) {
+        try {
+            const loginUser = await firebase.auth().signInWithEmailAndPassword(email, password);
+            if (loginUser && loginUser.user) {
+                setSigned(true);
+                return true
+            }
+        } catch (e) {
+            alert(e);
+            return false
+        }
+    }
+
+    async function signOut() {
+        try {
+            const signOutUser = await firebase.auth().signOut();
+            if(signOutUser){
+                setSigned(false);
+            }
+        } catch (e) {
+            alert(e);
+        }
     }
 
     return (
-        <AuthContext.Provider value={{ signed: !! user, user, signIn, signOut, loading }} >
+        <AuthContext.Provider
+            value={{
+                signed: signed,
+                register,
+                login,
+                signOut,
+                loading
+            }}>
             {children}
         </AuthContext.Provider>
     )

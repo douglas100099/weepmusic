@@ -1,19 +1,30 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, StatusBar, Alert } from 'react-native';
+import React, { useContext,useState } from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+    StatusBar,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    Platform,
+    Alert
+} from 'react-native';
 import { BackgroundImage, Button, Logo } from '../components';
-import { colors, font } from '../constants';
+import { font, colors } from '../constants';
 import { Feather } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import AuthContext from '../contexts/auth';
 
-const Login = ({ navigation }) => {
+const Register = () => {
 
-    const { login } = useContext(AuthContext);
+    const { register } = useContext(AuthContext);
 
     const [togglePass, setTogglePass] = useState(true);
+    const [togglePass2, setTogglePass2] = useState(true);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
 
     function checkEmail() {
         if (email.length > 2) {
@@ -25,17 +36,21 @@ const Login = ({ navigation }) => {
 
     function checkPass() {
         if (password.length > 2) {
-            return true
+            if (password === password2) {
+                return true
+            } else {
+                return false
+            }
         } else {
             return false
         }
     }
 
-    async function handleLogin(email, password) {
+    async function handleRegister(email, password) {
         try {
             if (checkEmail() && checkPass()) {
-                const loginUser = await login(email, password);
-                if (loginUser) {
+                const registerUser = await register(email, password);
+                if (registerUser) {
                     console.log('Logado com sucesso');
                 }
             } else {
@@ -75,7 +90,7 @@ const Login = ({ navigation }) => {
                         fontSize: 15,
                         marginBottom: 25,
                     }}
-                >ENTRAR</Text>
+                >CADASTRAR</Text>
                 <View style={{ height: 50, width: '80%', justifyContent: 'center' }}>
                     <Feather
                         name="mail"
@@ -142,35 +157,59 @@ const Login = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <View style={{ height: 50, width: '80%', justifyContent: 'center', marginTop: 30 }}>
+                    <Feather
+                        name="lock"
+                        size={18}
+                        color={colors.redlight}
+                        style={{
+                            position: 'absolute',
+                            left: 8,
+                            zIndex: 99
+                        }}
+                    />
+                    <TextInput
+                        onChangeText={(password2) => setPassword2(password2)}
+                        placeholder='Confirme sua senha'
+                        placeholderTextColor='rgba(255,255,255, 0.4)'
+                        secureTextEntry={togglePass2}
+                        style={{
+                            height: 50,
+                            borderRadius: 5,
+                            padding: 5,
+                            paddingLeft: 40,
+                            paddingRight: 35,
+                            backgroundColor: 'rgba(255,255,255, 0.2)',
+                            fontFamily: font.regular,
+                            fontSize: 16,
+                            color: 'rgba(255,255,255, 0.8)'
+                        }}
+                    />
+                    <View style={{ width: 20, height: 20, position: 'absolute', right: 8 }}>
+                        <TouchableOpacity>
+                            <Feather
+                                name="eye"
+                                size={18}
+                                color={colors.redlight}
+                                onPress={() => setTogglePass2(!togglePass2)}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
                 <Button
                     styleView={{ marginTop: 50 }}
-                    onPress={() => handleLogin(email, password)}
+                    onPress={() => handleRegister(email, password)}
                 >
-                    LOGIN
+                    CADASTRAR
                 </Button>
                 <View style={{
-                    flexDirection: 'row',
                     marginTop: 25,
                 }}>
                     <Text style={{
                         fontFamily: font.bold,
-                        color: colors.white,
-                        fontSize: 16
-                    }}>Não possui conta?</Text>
-                    <View style={{
-                        marginLeft: 3
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('Register')}
-                        >
-                            <Text style={{
-                                fontFamily: font.bold,
-                                color: colors.redlight,
-                                fontSize: 16,
-                                textDecorationLine: 'underline',
-                            }}>Cadastre-se agora!</Text>
-                        </TouchableOpacity>
-                    </View>
+                        color: 'rgba(255,255,255, 0.8)',
+                        fontSize: 14
+                    }}>Ao se cadastar você aceita os termos</Text>
                 </View>
                 <StatusBar barStyle='light-content' translucent={true} backgroundColor="transparent" />
             </View>
@@ -178,4 +217,4 @@ const Login = ({ navigation }) => {
     );
 }
 
-export default Login;
+export default Register;

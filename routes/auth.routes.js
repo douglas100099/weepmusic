@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '../screens/Login';
+import { Login, Register } from '../screens';
 
 const AuthStack = createStackNavigator();
 
@@ -10,6 +10,13 @@ const AuthRoutes = () => (
         <AuthStack.Screen
             name="Login"
             component={Login} 
+            options={{
+                headerShown: false
+            }}
+        />
+        <AuthStack.Screen
+            name="Register"
+            component={Register} 
             options={{
                 headerShown: false
             }}
