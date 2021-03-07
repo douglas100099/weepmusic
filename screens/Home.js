@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { colors } from '../constants';
+import { Feather } from '@expo/vector-icons';
 
-
-const Home = () => {
+const Home = ({ navigation }) => {
     return (
-        <View style={{ backgroundColor: '#000000' }}>
-            <Text>Home</Text>
+        <View style={{ flex: 1, backgroundColor: colors.darkblue }}>
         </View>
     );
 }
