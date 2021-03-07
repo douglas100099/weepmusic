@@ -6,14 +6,14 @@ import AuthRoutes from './auth.routes';
 
 
 import AuthContext from '../contexts/auth';
+import { colors } from '../constants';
 
 const Routes = () => {
   const { signed, loading } = useContext(AuthContext);
   
-
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItem: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItem: 'center', backgroundColor: colors.darkblue }}>
         <ActivityIndicator size='large' />
       </View>
     )

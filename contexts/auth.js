@@ -24,11 +24,30 @@ export const AuthProvider = ({ children }) => {
         try {
             const registerUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
             if (registerUser && registerUser.user) {
-                setSigned(true);
-                return true
+                const hadleCreate = await createUserDB()
+                if(hadleCreate){
+                    setSigned(true);
+                    return true
+                } else {
+                    alert('Não foi possível criar usuário no banco de dados')
+                    return false
+                }
             }
         } catch (e) {
             alert(e);
+            return false
+        }
+    }
+
+    async function createUserDB(){
+        try {
+            const createUser = firebase.app().database().ref(`users/${firebase.auth().currentUser.uid}`)
+            createUser.set({
+                email: firebase.auth().currentUser.email
+            })
+            return true
+        } catch (e) {
+            alert(e)
             return false
         }
     }
